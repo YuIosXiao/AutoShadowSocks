@@ -15,7 +15,7 @@ TODAY=`date '+%Y-%m-%d %H:%M:%S'`
 git commit -am "${TODAY}"
 
 git status
-curl -s 'https://github.com/qokelate/sma11case' > /dev/null && git push origin master
+curl -s 'https://github.com/qokelate' > /dev/null && git push origin master
 
 echo finished.
 #exit 0
