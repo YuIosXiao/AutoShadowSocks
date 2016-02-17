@@ -115,7 +115,7 @@
         [view mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.leading.mas_equalTo(_userTF.mas_trailing).offset(20);
             make.width.mas_equalTo(240);
-            make.bottom.mas_equalTo(ws.mas_bottom);
+            make.bottom.mas_equalTo(ws.mas_bottom).offset(-10);
             make.top.mas_equalTo(_userTF.mas_top).offset(60);
         }];
         _buyListView = view;
@@ -163,7 +163,7 @@
         [view mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.leading.mas_equalTo(_buyListView.mas_trailing).offset(20);
             make.width.mas_equalTo(240);
-            make.bottom.mas_equalTo(ws.mas_bottom);
+            make.bottom.mas_equalTo(ws.mas_bottom).offset(-10);
             make.top.mas_equalTo(_buyListView.mas_top);
         }];
         _myListView = view;
