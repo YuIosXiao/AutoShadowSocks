@@ -17,4 +17,9 @@
 * 致谢github!
 
 ## 晒个图
+
+### OSX版本
 ![](AppSnap.png)
+
+### Windows 版本
+![](SSLinkForWindows/使用说明.png)
