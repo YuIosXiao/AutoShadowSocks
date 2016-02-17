@@ -1,0 +1,353 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3F255D311C7310E700913892 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F255D301C7310E700913892 /* AppDelegate.m */; };
+		3F255D341C7310E700913892 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F255D331C7310E700913892 /* main.m */; };
+		3F255D361C7310E700913892 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3F255D351C7310E700913892 /* Assets.xcassets */; };
+		3F255D391C7310E700913892 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3F255D371C7310E700913892 /* MainMenu.xib */; };
+		3F9D66241C7311E000905931 /* RootWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F9D66231C7311E000905931 /* RootWindow.m */; };
+		3F9D66271C73177200905931 /* sma11case.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F9D66261C73177200905931 /* sma11case.a */; };
+		3F9D662B1C7318ED00905931 /* libz.1.2.5.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F9D662A1C7318ED00905931 /* libz.1.2.5.tbd */; };
+		3F9D662D1C7318F200905931 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F9D662C1C7318F200905931 /* libsqlite3.0.tbd */; };
+		3F9D66301C73224200905931 /* ShadowSocksHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F9D662F1C73224200905931 /* ShadowSocksHelper.m */; };
+		3F9D66321C732B1900905931 /* Resources in Resources */ = {isa = PBXBuildFile; fileRef = 3F9D66311C732B0A00905931 /* Resources */; };
+		3F9D66491C7409FA00905931 /* libcurl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F9D66481C7409FA00905931 /* libcurl.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		3F255D2C1C7310E700913892 /* SSLinker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SSLinker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3F255D2F1C7310E700913892 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		3F255D301C7310E700913892 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		3F255D331C7310E700913892 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		3F255D351C7310E700913892 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		3F255D381C7310E700913892 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		3F255D3A1C7310E700913892 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3F9D66221C7311E000905931 /* RootWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RootWindow.h; sourceTree = "<group>"; };
+		3F9D66231C7311E000905931 /* RootWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RootWindow.m; sourceTree = "<group>"; };
+		3F9D66261C73177200905931 /* sma11case.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = sma11case.a; path = SSLinker/librarys/OSX/sma11case.a; sourceTree = "<group>"; };
+		3F9D66281C73178D00905931 /* libcurl_osx.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl_osx.a; path = SSLinker/librarys/ExternalsLibrary/libcurl_osx.a; sourceTree = "<group>"; };
+		3F9D662A1C7318ED00905931 /* libz.1.2.5.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.1.2.5.tbd; path = usr/lib/libz.1.2.5.tbd; sourceTree = SDKROOT; };
+		3F9D662C1C7318F200905931 /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
+		3F9D662E1C73224200905931 /* ShadowSocksHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShadowSocksHelper.h; sourceTree = "<group>"; };
+		3F9D662F1C73224200905931 /* ShadowSocksHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShadowSocksHelper.m; sourceTree = "<group>"; };
+		3F9D66311C732B0A00905931 /* Resources */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Resources; sourceTree = "<group>"; };
+		3F9D66471C7409E800905931 /* librarys */ = {isa = PBXFileReference; lastKnownFileType = folder; path = librarys; sourceTree = "<group>"; };
+		3F9D66481C7409FA00905931 /* libcurl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcurl.a; path = SSLinker/librarys/OSX/libcurl.a; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3F255D291C7310E700913892 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3F9D66491C7409FA00905931 /* libcurl.a in Frameworks */,
+				3F9D66271C73177200905931 /* sma11case.a in Frameworks */,
+				3F9D662B1C7318ED00905931 /* libz.1.2.5.tbd in Frameworks */,
+				3F9D662D1C7318F200905931 /* libsqlite3.0.tbd in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3F255D231C7310E700913892 = {
+			isa = PBXGroup;
+			children = (
+				3F9D66311C732B0A00905931 /* Resources */,
+				3F9D66251C73176100905931 /* Frameworks */,
+				3F255D2E1C7310E700913892 /* SSLinker */,
+				3F255D2D1C7310E700913892 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3F255D2D1C7310E700913892 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3F255D2C1C7310E700913892 /* SSLinker.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3F255D2E1C7310E700913892 /* SSLinker */ = {
+			isa = PBXGroup;
+			children = (
+				3F9D66471C7409E800905931 /* librarys */,
+				3F255D2F1C7310E700913892 /* AppDelegate.h */,
+				3F255D301C7310E700913892 /* AppDelegate.m */,
+				3F9D66221C7311E000905931 /* RootWindow.h */,
+				3F9D66231C7311E000905931 /* RootWindow.m */,
+				3F9D662E1C73224200905931 /* ShadowSocksHelper.h */,
+				3F9D662F1C73224200905931 /* ShadowSocksHelper.m */,
+				3F255D351C7310E700913892 /* Assets.xcassets */,
+				3F255D371C7310E700913892 /* MainMenu.xib */,
+				3F255D3A1C7310E700913892 /* Info.plist */,
+				3F255D321C7310E700913892 /* Supporting Files */,
+			);
+			path = SSLinker;
+			sourceTree = "<group>";
+		};
+		3F255D321C7310E700913892 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				3F255D331C7310E700913892 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		3F9D66251C73176100905931 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3F9D66481C7409FA00905931 /* libcurl.a */,
+				3F9D662C1C7318F200905931 /* libsqlite3.0.tbd */,
+				3F9D662A1C7318ED00905931 /* libz.1.2.5.tbd */,
+				3F9D66261C73177200905931 /* sma11case.a */,
+				3F9D66281C73178D00905931 /* libcurl_osx.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3F255D2B1C7310E700913892 /* SSLinker */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3F255D3D1C7310E700913892 /* Build configuration list for PBXNativeTarget "SSLinker" */;
+			buildPhases = (
+				3F255D281C7310E700913892 /* Sources */,
+				3F255D291C7310E700913892 /* Frameworks */,
+				3F255D2A1C7310E700913892 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SSLinker;
+			productName = SSLinker;
+			productReference = 3F255D2C1C7310E700913892 /* SSLinker.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3F255D241C7310E700913892 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = sma11case;
+				TargetAttributes = {
+					3F255D2B1C7310E700913892 = {
+						CreatedOnToolsVersion = 7.2;
+					};
+				};
+			};
+			buildConfigurationList = 3F255D271C7310E700913892 /* Build configuration list for PBXProject "SSLinker" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 3F255D231C7310E700913892;
+			productRefGroup = 3F255D2D1C7310E700913892 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3F255D2B1C7310E700913892 /* SSLinker */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3F255D2A1C7310E700913892 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3F9D66321C732B1900905931 /* Resources in Resources */,
+				3F255D361C7310E700913892 /* Assets.xcassets in Resources */,
+				3F255D391C7310E700913892 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3F255D281C7310E700913892 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3F9D66241C7311E000905931 /* RootWindow.m in Sources */,
+				3F255D341C7310E700913892 /* main.m in Sources */,
+				3F255D311C7310E700913892 /* AppDelegate.m in Sources */,
+				3F9D66301C73224200905931 /* ShadowSocksHelper.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		3F255D371C7310E700913892 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3F255D381C7310E700913892 /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		3F255D3B1C7310E700913892 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		3F255D3C1C7310E700913892 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		3F255D3E1C7310E700913892 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = SSLinker/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/SSLinker/librarys/ExternalsLibrary",
+					"$(PROJECT_DIR)/SSLinker/librarys/OSX",
+				);
+				OTHER_LDFLAGS = (
+					"-Objc",
+					"-all_load",
+					"-lxml2",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.qiuxy.SSLinker;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		3F255D3F1C7310E700913892 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = SSLinker/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/SSLinker/librarys/ExternalsLibrary",
+					"$(PROJECT_DIR)/SSLinker/librarys/OSX",
+				);
+				OTHER_LDFLAGS = (
+					"-Objc",
+					"-all_load",
+					"-lxml2",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.qiuxy.SSLinker;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3F255D271C7310E700913892 /* Build configuration list for PBXProject "SSLinker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3F255D3B1C7310E700913892 /* Debug */,
+				3F255D3C1C7310E700913892 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3F255D3D1C7310E700913892 /* Build configuration list for PBXNativeTarget "SSLinker" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3F255D3E1C7310E700913892 /* Debug */,
+				3F255D3F1C7310E700913892 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3F255D241C7310E700913892 /* Project object */;
+}
