@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-#import "ZXQRCodeDetector.h"
+#import "../../detector/ZXQRCodeDetector.h"
 
 /**
  * Encapsulates logic that can detect one or more QR Codes in an image, even if the QR Code

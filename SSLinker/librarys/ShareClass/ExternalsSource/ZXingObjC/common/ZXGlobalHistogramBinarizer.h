@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-#import "ZXBinarizer.h"
+#import "../core/ZXBinarizer.h"
 
 @class ZXBitArray, ZXBitMatrix, ZXLuminanceSource;
 

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-#import "ZXAbstractRSSReader.h"
+#import "../ZXAbstractRSSReader.h"
 
 @class ZXRSSDataCharacter, ZXRSSFinderPattern;
 

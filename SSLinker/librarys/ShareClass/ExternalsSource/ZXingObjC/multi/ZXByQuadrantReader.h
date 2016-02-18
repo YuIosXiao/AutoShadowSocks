@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-#import "ZXReader.h"
+#import "../core/ZXReader.h"
 
 /**
  * This class attempts to decode a barcode from an image, not by scanning the whole image,

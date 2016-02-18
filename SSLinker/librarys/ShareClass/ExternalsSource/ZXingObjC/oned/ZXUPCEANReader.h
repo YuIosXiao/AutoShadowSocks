@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-#import "ZXBarcodeFormat.h"
+#import "../core/ZXBarcodeFormat.h"
 #import "ZXOneDReader.h"
 
 typedef enum {

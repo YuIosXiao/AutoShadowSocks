@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-#import "ZXWriter.h"
+#import "../core/ZXWriter.h"
 
 /**
  * This object renders a Data Matrix code as a BitMatrix 2D array of greyscale values.

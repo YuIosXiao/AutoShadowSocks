@@ -19,17 +19,17 @@
 
 #define _ZXINGOBJC_PDF417_
 
-#import "ZXModulusGF.h"
-#import "ZXPDF417.h"
-#import "ZXPDF417BarcodeMatrix.h"
+#import "decoder/ec/ZXModulusGF.h"
+#import "encoder/ZXPDF417.h"
+#import "encoder/ZXPDF417BarcodeMatrix.h"
 #import "ZXPDF417Common.h"
-#import "ZXPDF417Detector.h"
-#import "ZXPDF417DetectorResult.h"
-#import "ZXPDF417Dimensions.h"
-#import "ZXPDF417ECErrorCorrection.h"
+#import "detector/ZXPDF417Detector.h"
+#import "detector/ZXPDF417DetectorResult.h"
+#import "encoder/ZXPDF417Dimensions.h"
+#import "decoder/ec/ZXPDF417ECErrorCorrection.h"
 #import "ZXPDF417Reader.h"
 #import "ZXPDF417ResultMetadata.h"
-#import "ZXPDF417ScanningDecoder.h"
+#import "decoder/ZXPDF417ScanningDecoder.h"
 #import "ZXPDF417Writer.h"
 
 #endif

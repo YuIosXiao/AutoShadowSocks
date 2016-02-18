@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-#import "ZXResultPoint.h"
+#import "../../core/ZXResultPoint.h"
 
 /**
  * Encapsulates a finder pattern, which are the three square patterns found in

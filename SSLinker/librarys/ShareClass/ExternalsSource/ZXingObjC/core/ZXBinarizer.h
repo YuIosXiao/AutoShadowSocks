@@ -16,8 +16,8 @@
  */
 
 #import <CoreGraphics/CoreGraphics.h>
-#import "ZXBitArray.h"
-#import "ZXBitMatrix.h"
+#import "../common/ZXBitArray.h"
+#import "../common/ZXBitMatrix.h"
 #import "ZXLuminanceSource.h"
 
 /**

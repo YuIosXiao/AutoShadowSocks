@@ -16,7 +16,7 @@
  */
 
 #import "ZXParsedResultType.h"
-#import "ZXResult.h"
+#import "../../core/ZXResult.h"
 
 /**
  * Abstract class representing the result of decoding a barcode, as more than

@@ -15,26 +15,26 @@
  * limitations under the License.
  */
 
-#import "ZXingObjCCore.h"
+#import "../core/ZXingObjCCore.h"
 
 #ifndef _ZXINGOBJC_QRCODE_
 
 #define _ZXINGOBJC_QRCODE_
 
-#import "ZXQRCode.h"
-#import "ZXQRCodeAlignmentPattern.h"
-#import "ZXQRCodeDecoder.h"
-#import "ZXQRCodeDecoderMetaData.h"
-#import "ZXQRCodeDetector.h"
-#import "ZXQRCodeEncoder.h"
-#import "ZXQRCodeErrorCorrectionLevel.h"
-#import "ZXQRCodeFinderPatternInfo.h"
-#import "ZXQRCodeFinderPattern.h"
-#import "ZXQRCodeFinderPatternFinder.h"
-#import "ZXQRCodeFinderPatternInfo.h"
-#import "ZXQRCodeMode.h"
+#import "encoder/ZXQRCode.h"
+#import "detector/ZXQRCodeAlignmentPattern.h"
+#import "decoder/ZXQRCodeDecoder.h"
+#import "decoder/ZXQRCodeDecoderMetaData.h"
+#import "detector/ZXQRCodeDetector.h"
+#import "encoder/ZXQRCodeEncoder.h"
+#import "decoder/ZXQRCodeErrorCorrectionLevel.h"
+#import "detector/ZXQRCodeFinderPatternInfo.h"
+#import "detector/ZXQRCodeFinderPattern.h"
+#import "detector/ZXQRCodeFinderPatternFinder.h"
+#import "detector/ZXQRCodeFinderPatternInfo.h"
+#import "decoder/ZXQRCodeMode.h"
 #import "ZXQRCodeReader.h"
-#import "ZXQRCodeVersion.h"
+#import "decoder/ZXQRCodeVersion.h"
 #import "ZXQRCodeWriter.h"
 
 #endif

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-#import "ZXEncodeHints.h"
+#import "../../core/ZXEncodeHints.h"
 
 @class ZXDimension;
 

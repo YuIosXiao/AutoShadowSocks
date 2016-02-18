@@ -15,8 +15,8 @@
  * limitations under the License.
  */
 
-#import "ZXMultipleBarcodeReader.h"
-#import "ZXReader.h"
+#import "../multi/ZXMultipleBarcodeReader.h"
+#import "../core/ZXReader.h"
 
 @class ZXDecodeHints, ZXResult;
 

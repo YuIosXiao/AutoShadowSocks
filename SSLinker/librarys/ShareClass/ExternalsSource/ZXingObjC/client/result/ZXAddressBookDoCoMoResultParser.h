@@ -16,7 +16,7 @@
  */
 
 #import "ZXAbstractDoCoMoResultParser.h"
-#import "ZXResult.h"
+#import "../../core/ZXResult.h"
 
 /**
  * Implements the "MECARD" address book entry format.

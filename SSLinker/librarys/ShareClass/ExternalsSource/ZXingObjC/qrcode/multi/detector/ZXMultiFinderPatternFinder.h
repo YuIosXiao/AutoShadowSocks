@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-#import "ZXQRCodeFinderPatternFinder.h"
+#import "../../detector/ZXQRCodeFinderPatternFinder.h"
 
 @class ZXDecodeHints;
 

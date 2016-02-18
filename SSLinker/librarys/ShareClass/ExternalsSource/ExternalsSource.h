@@ -20,5 +20,5 @@
 #import "MWFeedParser/MWFeedParser.h"
 #import "ZXingObjC/ZXingObjC.h"
 #import "ExtarnalExtend.h"
-//#import "ReactiveCocoa/ReactiveCocoa.h"
+#import "ReactiveCocoa/ReactiveCocoa.h"
 #import "libini/libini.h"

@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-#import "ZXWriter.h"
+#import "../core/ZXWriter.h"
 
 @interface ZXAztecWriter : NSObject <ZXWriter>
 

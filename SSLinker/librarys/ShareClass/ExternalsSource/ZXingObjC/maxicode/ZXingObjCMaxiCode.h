@@ -19,7 +19,7 @@
 
 #define _ZXINGOBJC_MAXICODE_
 
-#import "ZXMaxiCodeDecoder.h"
+#import "decoder/ZXMaxiCodeDecoder.h"
 #import "ZXMaxiCodeReader.h"
 
 #endif

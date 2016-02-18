@@ -19,14 +19,14 @@
 
 #define _ZXINGOBJC_DATAMATRIX_
 
-#import "ZXDataMatrixDecoder.h"
-#import "ZXDataMatrixDefaultPlacement.h"
-#import "ZXDataMatrixDetector.h"
-#import "ZXDataMatrixErrorCorrection.h"
-#import "ZXDataMatrixHighLevelEncoder.h"
+#import "decoder/ZXDataMatrixDecoder.h"
+#import "encoder/ZXDataMatrixDefaultPlacement.h"
+#import "detector/ZXDataMatrixDetector.h"
+#import "encoder/ZXDataMatrixErrorCorrection.h"
+#import "encoder/ZXDataMatrixHighLevelEncoder.h"
 #import "ZXDataMatrixReader.h"
-#import "ZXDataMatrixSymbolInfo.h"
-#import "ZXDataMatrixVersion.h"
+#import "encoder/ZXDataMatrixSymbolInfo.h"
+#import "decoder/ZXDataMatrixVersion.h"
 #import "ZXDataMatrixWriter.h"
 
 #endif
