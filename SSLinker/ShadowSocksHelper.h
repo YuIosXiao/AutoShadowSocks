@@ -24,7 +24,7 @@
 @interface ShadowSocksHelper : SCObject
 + (void)runSSClientWithParam: (ShadowSocksConfig *)param listenParam: (SCNetworkInfo *)sparam;
 + (void)runSSClientWithStringParam: (NSString *)param;
-+ (BOOL)verifySSWithListenParam: (SCNetworkInfo *)param;
++ (BOOL)verifySSWithListenParam:(SCNetworkInfo *)param url: (NSString *)url;
 @end
 
 @interface ShadowSocksHelper(SSLink)

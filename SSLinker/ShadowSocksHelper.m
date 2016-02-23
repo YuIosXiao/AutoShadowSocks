@@ -33,12 +33,12 @@
     [CoreTools executeCommand:sscmd waitFinished:NO];
 }
 
-+ (BOOL)verifySSWithListenParam:(SCNetworkInfo *)param
++ (BOOL)verifySSWithListenParam:(SCNetworkInfo *)param url: (NSString *)url
 {
     CURLParam *cp = NewClass(CURLParam);
     cp.writeCbParam = nil;
     cp.writeCallbackBlock = nil;
-    cp.url = @"http://global.bing.com/";
+    cp.url = url;
     cp.userAgent = @"Firefox";
     CURLParamSetProxy(cp, CURLPROXY_SOCKS5, param.host, param.port);
     CURLcode code = [cp requestWithFinishedBlock:nil];
@@ -161,13 +161,13 @@
     [CoreNetwork request:@"http://www1.ss-link.com/order" getParam:nil postParam:param postType:NetPostTypeFormData userParam:nil block:^(id respone, NSError *error, id userParam) {
             if (block)
             {
-                respone = [respone toDictionaryByJsonData];
+                respone = [respone toJSONObject];
                 BOOL state = (0 == FType(NSNumber *, respone[@"result"]).integerValue);
                 
                 if (state)
                 {
                     [CoreNetwork request:@"http://www1.ss-link.com/pay" getParam:nil postParam:@{} postType:NetPostTypeFormData userParam:nil block:^(id respone, NSError *error, id userParam) {
-                        respone = [respone toDictionaryByJsonData];
+                        respone = [respone toJSONObject];
                         BOOL state = (1 == FType(NSNumber *, respone[@"result"]).integerValue);
                         
                         if (state)
@@ -197,7 +197,7 @@
 {
     NSDictionary *param = @{@"hostingId":hostingId};
     [CoreNetwork request:@"http://www1.ss-link.com/createHosting" getParam:nil postParam:param postType:NetPostTypeFormData userParam:nil block:^(id respone, NSError *error, id userParam) {
-        respone = [respone toDictionaryByJsonData];
+        respone = [respone toJSONObject];
         BOOL state = (0 == FType(NSNumber *, respone[@"result"]).integerValue);
         if (block) block(state);
     }];

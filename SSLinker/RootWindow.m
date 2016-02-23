@@ -24,6 +24,10 @@
     __weak NSButton *_freshMyListBtn;
     __weak NSButton *_startServiceBtn;
     __weak CPView   *_myListView;
+    
+    __weak NSTextField  *_stateTF;
+    __weak NSTextField  *_verifyTF;
+    __weak NSButton     *_verifyBtn;
 
     NSArray         *_buyServers;
     NSArray         *_myServers;
@@ -188,8 +192,6 @@
     {
         NSButton *btn = NewClass(NSButton);
         btn.enabled = NO;
-        //        btn.target = self;
-        //        btn.action = @selector(startServiceBtn:);
         btn.title = @"add";
         [self.contentView addSubview:btn];
         [btn mas_remakeConstraints:^(MASConstraintMaker *make) {
@@ -200,6 +202,52 @@
         }];
         _startServiceBtn = btn;
     }
+    
+    {
+        NSButton *btn = NewClass(NSButton);
+        btn.target = self;
+        btn.action = @selector(verifyBtn:);
+        btn.title = @"auto verify proxy";
+        [btn setButtonType:NSSwitchButton];
+        [self.contentView addSubview:btn];
+        [btn mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(_loginBtn.mas_bottom).offset(20);
+            make.leading.mas_equalTo(_userTF.mas_leading);
+            make.trailing.mas_equalTo(_userTF.mas_trailing);
+            make.height.mas_equalTo(20);
+        }];
+        _verifyBtn = btn;
+        
+        NSTextField *tf = NewClass(NSTextField);
+        tf.font = [NSFont systemFontOfSize:12];
+        tf.textColor = BlackColor;
+        tf.placeholderString = @"verify url";
+        [self.contentView addSubview:tf];
+        [tf mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(_verifyBtn.mas_bottom);
+            make.leading.mas_equalTo(_verifyBtn.mas_leading);
+            make.trailing.mas_equalTo(_verifyBtn.mas_trailing);
+            make.height.mas_equalTo(20);
+        }];
+        _verifyTF = tf;
+    }
+    
+    {
+        NSTextField *tf = NewClass(NSTextField);
+        tf.enabled = NO;
+        tf.alignment = NSTextAlignmentCenter;
+        tf.font = [NSFont systemFontOfSize:12];
+        tf.textColor = BlackColor;
+        tf.stringValue = @"state: unknow";
+        [self.contentView addSubview:tf];
+        [tf mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(_verifyTF.mas_bottom).offset(5);
+            make.leading.mas_equalTo(_verifyBtn.mas_leading);
+            make.trailing.mas_equalTo(_verifyBtn.mas_trailing);
+            make.height.mas_equalTo(20);
+        }];
+        _stateTF = tf;
+    }
 
     {
         NSString *user = [NSUD stringForKey:@"userName"];
@@ -209,6 +257,47 @@
             _userTF.stringValue = user;
             if (pwd.length) _pwdTF.stringValue = pwd;
         }
+        
+        _verifyTF.stringValue = @"https://www.google.com/";
+    }
+}
+
+- (void)verifyProxyWithUrl: (NSString *)url
+{
+    LogFunctionName();
+    
+    CopyAsWeak(self, ws);
+    runBlockWithAsync(^{
+        if (NSOnState != _verifyBtn.state) return ;
+        
+        BOOL state = [ShadowSocksHelper verifySSWithListenParam:_listenInfo url:url];
+        runBlockWithMain(^{
+            _stateTF.textColor = (state ? GreenColor : RedColor);
+            _stateTF.stringValue = (state ? @"state: ok" : @"state: failed");
+        });
+        
+        [NSThread sleepForTimeInterval:2];
+        performSelector0(ws, _cmd, url);
+    });
+}
+
+- (void)verifyBtn: (NSButton *)sender
+{
+    LogFunctionName();
+    
+    if (NSOnState == sender.state)
+    {
+        _verifyTF.enabled = NO;
+        [self verifyProxyWithUrl:@"https://www.google.com"];
+        return;
+    }
+    
+    if (NSOffState == sender.state)
+    {
+        _verifyTF.enabled = YES;
+        _stateTF.textColor = BlackColor;
+        _stateTF.stringValue = @"state: unknow";
+        return;
     }
 }
 
