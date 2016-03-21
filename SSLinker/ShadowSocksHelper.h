@@ -19,6 +19,7 @@
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) NSString *hostingId;
 @property (nonatomic, assign) BOOL hostingState;
+@property (nonatomic, assign) NSTimeInterval expireTime;
 @end
 
 @interface ShadowSocksHelper : SCObject

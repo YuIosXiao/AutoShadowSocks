@@ -8,15 +8,11 @@ cd ${SCRIPT_DIR}
 
 git add SSLinker/*
 git add Resources/*
+git add Released/*
 
-git add SSLinker.xcodeproj/xcshareddata/xcschemes/*
+#git add SSLinker.xcodeproj/xcshareddata/xcschemes/*
 
-TODAY=$1
-if [ $1 == "" ] 
-then   
-TODAY=`date '+%Y-%m-%d %H:%M:%S'`
-fi
-git commit -am "${TODAY}"
+git commit -am "$1"
 
 git status
 #curl -s 'https://github.com/qokelate' > /dev/null && git push origin master

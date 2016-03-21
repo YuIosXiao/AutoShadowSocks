@@ -10,28 +10,35 @@
 #import "ShadowSocksHelper.h"
 #import "librarys/OSX/staticLibrary_OSX.h"
 
+static NSString *const kMsgTypeFreshMyList = @"MsgTypeFreshMyList";
+
+@interface RootWindow () <MsgDispatcherDelegate>
+
+@end
+
 @implementation RootWindow
 {
-    __weak NSTextField  *_userTF;
-    __weak NSTextField  *_pwdTF;
-    __weak NSButton     *_registerBtn;
-    __weak NSButton     *_loginBtn;
+    __unsafe_unretained NSTextField *_userTF;
+    __unsafe_unretained NSTextField *_pwdTF;
+    __unsafe_unretained NSButton    *_registerBtn;
+    __unsafe_unretained NSButton    *_loginBtn;
 
-    __weak NSButton *_freshBuyListBtn;
-    __weak NSButton *_buyBtn;
-    __weak CPView   *_buyListView;
+    __unsafe_unretained NSButton    *_freshBuyListBtn;
+    __unsafe_unretained NSButton    *_buyAllBtn;
+    __unsafe_unretained CPView      *_buyListView;
 
-    __weak NSButton *_freshMyListBtn;
-    __weak NSButton *_startServiceBtn;
-    __weak CPView   *_myListView;
-    
-    __weak NSTextField  *_stateTF;
-    __weak NSTextField  *_verifyTF;
-    __weak NSButton     *_verifyBtn;
+    __unsafe_unretained NSButton    *_freshMyListBtn;
+    __unsafe_unretained NSButton    *_testBtn;
+    __unsafe_unretained CPView      *_myListView;
+
+    __unsafe_unretained NSTextField *_stateTF;
+    __unsafe_unretained NSTextField *_verifyTF;
+    __unsafe_unretained NSButton    *_verifyBtn;
 
     NSArray         *_buyServers;
     NSArray         *_myServers;
     SCNetworkInfo   *_listenInfo;
+    MsgDispatcher   *_msgCenter;
 }
 
 - (void)awakeFromNib
@@ -46,6 +53,9 @@
     _listenInfo = NewClass(SCNetworkInfo);
     _listenInfo.host = @"127.0.0.1";
     _listenInfo.port = 1080U;
+
+    _msgCenter = NewClass(MsgDispatcher);
+    [_msgCenter addReceiver:self type:kMsgTypeFreshMyList];
 
     {
         NSTextField *tf = NewClass(NSTextField);
@@ -78,7 +88,7 @@
         }];
         _pwdTF = tf;
     }
-    
+
     {
         NSButton *btn = NewClass(NSButton);
         btn.target = self;
@@ -130,7 +140,7 @@
         btn.enabled = NO;
         btn.target = self;
         btn.action = @selector(freshBuyListBtn:);
-        btn.title = @"buy servers";
+        btn.title = @"fresh";
         [self.contentView addSubview:btn];
         [btn mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(_userTF.mas_top);
@@ -144,9 +154,9 @@
     {
         NSButton *btn = NewClass(NSButton);
         btn.enabled = NO;
-        //        btn.target = self;
-        //        btn.action = @selector(buyBtn:);
-        btn.title = @"add";
+        btn.title = @"buy all";
+        btn.target = self;
+        btn.action = @selector(buyAllBtn:);
         [self.contentView addSubview:btn];
         [btn mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(_userTF.mas_top);
@@ -154,7 +164,7 @@
             make.width.mas_equalTo(80);
             make.height.mas_equalTo(40);
         }];
-        _buyBtn = btn;
+        _buyAllBtn = btn;
     }
 
     {
@@ -178,7 +188,7 @@
         btn.enabled = NO;
         btn.target = self;
         btn.action = @selector(freshServerBtn:);
-        btn.title = @"my servers";
+        btn.title = @"fresh";
         [self.contentView addSubview:btn];
         [btn mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(_userTF.mas_top);
@@ -191,8 +201,9 @@
 
     {
         NSButton *btn = NewClass(NSButton);
-        btn.enabled = NO;
-        btn.title = @"add";
+        btn.title = @"test proxy";
+        btn.target = self;
+        btn.action = @selector(testBtn:);
         [self.contentView addSubview:btn];
         [btn mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(_userTF.mas_top);
@@ -200,9 +211,9 @@
             make.width.mas_equalTo(80);
             make.height.mas_equalTo(40);
         }];
-        _startServiceBtn = btn;
+        _testBtn = btn;
     }
-    
+
     {
         NSButton *btn = NewClass(NSButton);
         btn.target = self;
@@ -217,7 +228,7 @@
             make.height.mas_equalTo(20);
         }];
         _verifyBtn = btn;
-        
+
         NSTextField *tf = NewClass(NSTextField);
         tf.font = [NSFont systemFontOfSize:12];
         tf.textColor = BlackColor;
@@ -231,7 +242,7 @@
         }];
         _verifyTF = tf;
     }
-    
+
     {
         NSTextField *tf = NewClass(NSTextField);
         tf.enabled = NO;
@@ -250,50 +261,53 @@
     }
 
     {
-        NSString *user = [NSUD stringForKey:@"userName"];
-        NSString *pwd = [NSUD stringForKey:@"password"];
-        if (user.length)
-        {
+        NSString    *user = [NSUD stringForKey:@"userName"];
+        NSString    *pwd = [NSUD stringForKey:@"password"];
+
+        if (user.length) {
             _userTF.stringValue = user;
-            if (pwd.length) _pwdTF.stringValue = pwd;
+
+            if (pwd.length) {
+                _pwdTF.stringValue = pwd;
+            }
         }
-        
+
         _verifyTF.stringValue = @"https://www.google.com/";
     }
 }
 
-- (void)verifyProxyWithUrl: (NSString *)url
+- (void)verifyProxyWithUrl:(NSString *)url
 {
     LogFunctionName();
-    
+
     CopyAsWeak(self, ws);
     runBlockWithAsync(^{
-        if (NSOnState != _verifyBtn.state) return ;
-        
+        if (NSOnState != _verifyBtn.state) {
+            return;
+        }
+
         BOOL state = [ShadowSocksHelper verifySSWithListenParam:_listenInfo url:url];
         runBlockWithMain(^{
             _stateTF.textColor = (state ? GreenColor : RedColor);
             _stateTF.stringValue = (state ? @"state: ok" : @"state: failed");
         });
-        
+
         [NSThread sleepForTimeInterval:2];
         performSelector0(ws, _cmd, url);
     });
 }
 
-- (void)verifyBtn: (NSButton *)sender
+- (void)verifyBtn:(NSButton *)sender
 {
     LogFunctionName();
-    
-    if (NSOnState == sender.state)
-    {
+
+    if (NSOnState == sender.state) {
         _verifyTF.enabled = NO;
         [self verifyProxyWithUrl:@"https://www.google.com"];
         return;
     }
-    
-    if (NSOffState == sender.state)
-    {
+
+    if (NSOffState == sender.state) {
         _verifyTF.enabled = YES;
         _stateTF.textColor = BlackColor;
         _stateTF.stringValue = @"state: unknow";
@@ -301,10 +315,10 @@
     }
 }
 
-- (void)registerBtn: (NSButton *)sender
+- (void)registerBtn:(NSButton *)sender
 {
     LogFunctionName();
-    
+
     [CoreTools executeCommand:@"open 'http://www1.ss-link.com/register'" waitFinished:NO];
 }
 
@@ -321,6 +335,7 @@
             if (state) {
                 _freshMyListBtn.enabled = YES;
                 _freshBuyListBtn.enabled = YES;
+                _buyAllBtn.enabled = YES;
                 [self freshServerBtn:_freshMyListBtn];
                 [self freshBuyListBtn:_freshBuyListBtn];
                 NSUDWriteObject(@"userName", user);
@@ -330,6 +345,42 @@
             }
         });
     }];
+}
+
+- (void)testBtn:(NSButton *)sender
+{
+    LogFunctionName();
+
+    sender.enabled = NO;
+    runBlockWithAsync(^{
+        NSString *url = _verifyTF.stringValue;
+        BOOL state = [ShadowSocksHelper verifySSWithListenParam:_listenInfo url:url];
+
+        runBlockWithMain(^{
+            NSAlert *alert = [[NSAlert alloc] init];
+            alert.messageText = [NSString stringWithFormat:@"proxy state: %@", (state ? @"reachable" : @"unreachable")];
+            [alert addButtonWithTitle:@"okay"];
+            [alert runModal];
+            sender.enabled = YES;
+        });
+    });
+}
+
+- (void)buyAllBtn:(NSButton *)sender
+{
+    LogFunctionName();
+
+    sender.enabled = NO;
+
+    runBlockWithAsync(^{
+        for (NSDictionary *config in _buyServers) {
+            MLog(@"buy %@ ...", config[@"name"]);
+            [ShadowSocksHelper sslink_buyServerWithName:config[@"name"] block:^(BOOL state) {
+                MLog(@"buy %@ state: %d", config[@"name"], state);
+                [_msgCenter dispatchMessage:kMsgTypeFreshMyList userParam:nil];
+            }];
+        }
+    });
 }
 
 - (void)freshBuyListBtn:(NSButton *)sender
@@ -445,6 +496,17 @@
         });
         return;
     }
+    
+    NSMutableArray *validServers = NewMutableArray();
+    for (SSLinkConfig *config in servers)
+    {
+        if (NO == config.hostingState) {
+            continue;
+        }
+        
+        [validServers addObject:config];
+    }
+    servers = validServers;
 
     _myServers = servers;
     [_myListView removeAllSubviews];
@@ -456,10 +518,15 @@
 
     NSUInteger count = servers.count;
 
+    NSTimeInterval now = [NSDate nowTimeStamp];
+
     for (NSUInteger a = 0; a < count; ++a) {
         SSLinkConfig *config = servers[a];
-        if (NO == config.hostingState) continue;
-        
+
+        if ((now - config.expireTime) >= 86400) {
+            continue;
+        }
+
         NSButton *btn = NewClass(NSButton);
         btn.tag = a;
         btn.target = self;
@@ -479,6 +546,20 @@
             x = 6;
             y += (height + 10);
         }
+    }
+}
+
+#pragma mark 消息代理
+- (void)didReceivedMessage:(NSString *)type msgDispatcher:(MsgDispatcher *)sender userParam:(id)param
+{
+    LogFunctionName();
+
+    if (IsSameString(type, kMsgTypeFreshMyList)) {
+        runBlockWithMain(^{
+            [self freshServerBtn:_freshMyListBtn];
+            _buyAllBtn.enabled = YES;
+        });
+        return;
     }
 }
 
