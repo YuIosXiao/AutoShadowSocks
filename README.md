@@ -19,7 +19,7 @@
 ## 晒个图
 
 ### OSX版本
-![](AppSnap.png)
+![](osx.png)
 
 ### Windows 版本
-![](SSLinkForWindows/使用说明.png)
+![](windows.png)
