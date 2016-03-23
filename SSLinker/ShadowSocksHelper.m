@@ -190,25 +190,21 @@
     NSDictionary *param = @{@"serviceId":name, @"term":@"year"};
 
     [CoreNetwork request:@"http://www1.ss-link.com/order" getParam:nil postParam:param postType:NetPostTypeFormData userParam:nil block:^(id respone, NSError *error, id userParam) {
+        
         if (block) {
             respone = [respone toJSONObject];
             BOOL state = (0 == FType(NSNumber *, respone[@"result"]).integerValue);
 
             if (state) {
                 [CoreNetwork request:@"http://www1.ss-link.com/pay" getParam:nil postParam:@{} postType:NetPostTypeFormData userParam:nil block:^(id respone, NSError *error, id userParam) {
-                    respone = [respone toJSONObject];
-                    BOOL state = (1 == FType(NSNumber *, respone[@"result"]).integerValue);
-
-                    if (state) {
-                        [self sslink_getServersWithBlock:^(NSArray *respone) {
-                            for (SSLinkConfig *config in respone) {
-                                if ([config.name.lowercaseString isEqualToString:name.lowercaseString] && (NO == config.hostingState)) {
-                                    [self sslink_createHostingWithHostingId:config.hostingId block:block];
-                                    break;
-                                }
-                            }
-                        }];
+                    
+                    if (block)
+                    {
+                        respone = [respone toJSONObject];
+                        BOOL state = (1 == FType(NSNumber *, respone[@"result"]).integerValue);
+                        block(state);
                     }
+
                 }];
             }
         }
@@ -217,16 +213,17 @@
     }];
 }
 
-+ (void)sslink_createHostingWithHostingId:(NSString *)hostingId block:(BoolBlock)block
++ (void)sslink_createHostingWithHostingId:(NSString *)hostingId block:(StateMessageBlock)block
 {
     NSDictionary *param = @{@"hostingId":hostingId};
 
     [CoreNetwork request:@"http://www1.ss-link.com/createHosting" getParam:nil postParam:param postType:NetPostTypeFormData userParam:nil block:^(id respone, NSError *error, id userParam) {
         respone = [respone toJSONObject];
-        BOOL state = (0 == FType(NSNumber *, respone[@"result"]).integerValue);
+        NSInteger state = FType(NSNumber *, respone[@"result"]).integerValue;
+        NSString *message = respone[@"msg"];
 
         if (block) {
-            block(state);
+            block(state, message);
         }
     }];
 }

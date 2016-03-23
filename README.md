@@ -13,7 +13,7 @@
 * 5. 在相应应用中设置代理,畅享无国界快感(在应用`Resource `目录有现成的`gfwlist.pac`,懒人可直接使用, `/SSLinker.app/Contents/Resources/Resources/gfwlist.js`)
 
 ## 关于
-* 没什么好说的,求一个有创作空间的offer,有资源的欢迎email我: `udf.q@qq.com`
+* 没什么好说的,`Released`目录是编译好的版本,不想折腾的下载解压即用.
 * 致谢github!
 
 ## 晒个图

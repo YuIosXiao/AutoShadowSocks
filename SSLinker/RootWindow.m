@@ -377,7 +377,11 @@ static NSString *const kMsgTypeFreshMyList = @"MsgTypeFreshMyList";
             MLog(@"buy %@ ...", config[@"name"]);
             [ShadowSocksHelper sslink_buyServerWithName:config[@"name"] block:^(BOOL state) {
                 MLog(@"buy %@ state: %d", config[@"name"], state);
-                [_msgCenter dispatchMessage:kMsgTypeFreshMyList userParam:nil];
+                if (config == _buyServers.lastObject) [self createAllHostsWithBlock:^{
+                    runBlockWithMain(^{
+                        _buyAllBtn.enabled = YES;
+                    });
+                }];
             }];
         }
     });
@@ -431,12 +435,13 @@ static NSString *const kMsgTypeFreshMyList = @"MsgTypeFreshMyList";
     NSDictionary *config = _buyServers[sender.tag];
 
     [ShadowSocksHelper sslink_buyServerWithName:config[@"name"] block:^(BOOL state) {
-        if (state) {
-            runBlockWithMain(^{
-                [self freshServerBtn:_freshMyListBtn];
-                sender.enabled = YES;
-            });
-        }
+        runBlockWithMain(^{
+            [self createAllHostsWithBlock:^{
+                runBlockWithMain(^{
+                    sender.enabled = YES;
+                });
+            }];
+        });
     }];
 }
 
@@ -506,6 +511,12 @@ static NSString *const kMsgTypeFreshMyList = @"MsgTypeFreshMyList";
         
         [validServers addObject:config];
     }
+    
+    [validServers sortUsingComparator:^NSComparisonResult(SSLinkConfig *obj1, SSLinkConfig * obj2) {
+        if (obj1.expireTime > obj2.expireTime) return  NSOrderedAscending;
+        if (obj1.expireTime < obj2.expireTime) return  NSOrderedDescending;
+        return NSOrderedSame;
+            }];
     servers = validServers;
 
     _myServers = servers;
@@ -523,10 +534,6 @@ static NSString *const kMsgTypeFreshMyList = @"MsgTypeFreshMyList";
     for (NSUInteger a = 0; a < count; ++a) {
         SSLinkConfig *config = servers[a];
 
-        if ((now - config.expireTime) >= 86400) {
-            continue;
-        }
-
         NSButton *btn = NewClass(NSButton);
         btn.tag = a;
         btn.target = self;
@@ -539,6 +546,13 @@ static NSString *const kMsgTypeFreshMyList = @"MsgTypeFreshMyList";
             make.width.mas_equalTo(width);
             make.height.mas_equalTo(height);
         }];
+        
+        if ((now - config.expireTime) >= 86400) {
+            [btn setTitleColor:RedColor];
+        }
+        else if ((now - config.expireTime) < 14400) {
+            btn.title = [NSString stringWithFormat:@"* %@", config.name];
+        }
 
         x += (width + 10);
 
@@ -549,6 +563,26 @@ static NSString *const kMsgTypeFreshMyList = @"MsgTypeFreshMyList";
     }
 }
 
+- (void)createAllHostsWithBlock: (EmptyBlock)block
+{
+    [ShadowSocksHelper sslink_getServersWithBlock:^(NSArray *respone) {
+        for (SSLinkConfig *config in respone)
+        {
+            if (0 == config.password.length)
+            {
+                [ShadowSocksHelper sslink_createHostingWithHostingId:config.hostingId block:^(NSInteger state, NSString *message) {
+                    MLog(@"create Hosting: %@ state:%ld message: %@", config.hostingId, state, message);
+                    if (config == respone.lastObject) [_msgCenter dispatchMessage:kMsgTypeFreshMyList userParam:block];
+                }];
+                
+                if (config == respone.lastObject) continue;
+            }
+            
+            if (config == respone.lastObject) [_msgCenter dispatchMessage:kMsgTypeFreshMyList userParam:block];
+        }
+    }];
+}
+
 #pragma mark 消息代理
 - (void)didReceivedMessage:(NSString *)type msgDispatcher:(MsgDispatcher *)sender userParam:(id)param
 {
@@ -557,8 +591,9 @@ static NSString *const kMsgTypeFreshMyList = @"MsgTypeFreshMyList";
     if (IsSameString(type, kMsgTypeFreshMyList)) {
         runBlockWithMain(^{
             [self freshServerBtn:_freshMyListBtn];
-            _buyAllBtn.enabled = YES;
         });
+        EmptyBlock block = param;
+        if (block) block();
         return;
     }
 }

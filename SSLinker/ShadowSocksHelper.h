@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "librarys/OSX/staticLibrary_OSX.h"
 
+typedef void(^StateMessageBlock)(NSInteger state, NSString *message);
+
 @interface ShadowSocksConfig : SCNetworkInfo
 @property (nonatomic, strong) NSString *method;
 @property (nonatomic, strong) NSString *password;
@@ -33,4 +35,5 @@
 + (void)sslink_getServersWithBlock:(ArrayBlock)block;
 + (void)sslink_getBuyServerList:(ArrayBlock)block;
 + (void)sslink_buyServerWithName: (NSString *)name block: (BoolBlock)block;
++ (void)sslink_createHostingWithHostingId:(NSString *)hostingId block:(StateMessageBlock)block;
 @end
