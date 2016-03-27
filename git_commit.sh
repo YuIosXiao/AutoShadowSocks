@@ -6,11 +6,9 @@ echo SCRIPT_DIR = ${SCRIPT_DIR}
 
 cd ${SCRIPT_DIR}
 
-git add SSLinker/*
-git add Resources/*
-git add Released/*
-
-#git add SSLinker.xcodeproj/xcshareddata/xcschemes/*
+git add OSX/SSLinker/*
+git add OSX/Resources/*
+git add Windows/*
 
 git commit -am "$1"
 
