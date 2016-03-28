@@ -286,7 +286,7 @@ static NSString *const kMsgTypeFreshMyList = @"MsgTypeFreshMyList";
             return;
         }
 
-        BOOL state = [ShadowSocksHelper verifySSWithListenParam:_listenInfo url:url];
+        NSData *state = [ShadowSocksHelper verifySSWithListenParam:_listenInfo url:url];
         runBlockWithMain(^{
             _stateTF.textColor = (state ? GreenColor : RedColor);
             _stateTF.stringValue = (state ? @"state: ok" : @"state: failed");
@@ -353,12 +353,24 @@ static NSString *const kMsgTypeFreshMyList = @"MsgTypeFreshMyList";
 
     sender.enabled = NO;
     runBlockWithAsync(^{
-        NSString *url = _verifyTF.stringValue;
-        BOOL state = [ShadowSocksHelper verifySSWithListenParam:_listenInfo url:url];
+        NSString *url = @"ip.cn";
+        NSData *state = [ShadowSocksHelper verifySSWithListenParam:_listenInfo url:url];
 
         runBlockWithMain(^{
             NSAlert *alert = [[NSAlert alloc] init];
-            alert.messageText = [NSString stringWithFormat:@"proxy state: %@", (state ? @"reachable" : @"unreachable")];
+            
+            if (state)
+            {
+                NSString *temp = [state toUTF8String];
+                if (temp) alert.messageText = temp;
+                else alert.messageText = @"proxy state: reachabled";
+            }
+            else
+            {
+                alert.messageText = @"proxy state: unreachable";
+            }
+            
+            alert.alertStyle = NSInformationalAlertStyle;
             [alert addButtonWithTitle:@"okay"];
             [alert runModal];
             sender.enabled = YES;
