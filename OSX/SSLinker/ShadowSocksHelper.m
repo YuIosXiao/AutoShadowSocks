@@ -33,17 +33,19 @@
     [CoreTools executeCommand:sscmd waitFinished:NO];
 }
 
-+ (BOOL)verifySSWithListenParam:(SCNetworkInfo *)param url:(NSString *)url
++ (NSData *)verifySSWithListenParam:(SCNetworkInfo *)param url:(NSString *)url
 {
     CURLParam *cp = NewClass(CURLParam);
 
-    cp.writeCbParam = nil;
-    cp.writeCallbackBlock = nil;
+    cp.writeCbParam = [NSMutableData data];
+    cp.writeCallbackBlock = CURLAppendDataBlock;
     cp.url = url;
-    cp.userAgent = @"Firefox";
+    //cp.userAgent = @"Firefox";
+    cp.userAgent = @"curl/7.47.1";
     CURLParamSetProxy(cp, CURLPROXY_SOCKS5, param.host, param.port);
     CURLcode code = [cp requestWithFinishedBlock:nil];
-    return CURLE_OK == code ? YES : NO;
+    if (CURLE_OK == code) return cp.writeCbParam;
+    return nil;
 }
 
 @end

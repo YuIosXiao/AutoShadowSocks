@@ -27,7 +27,7 @@ typedef void(^StateMessageBlock)(NSInteger state, NSString *message);
 @interface ShadowSocksHelper : SCObject
 + (void)runSSClientWithParam: (ShadowSocksConfig *)param listenParam: (SCNetworkInfo *)sparam;
 + (void)runSSClientWithStringParam: (NSString *)param;
-+ (BOOL)verifySSWithListenParam:(SCNetworkInfo *)param url: (NSString *)url;
++ (NSData *)verifySSWithListenParam:(SCNetworkInfo *)param url:(NSString *)url;
 @end
 
 @interface ShadowSocksHelper(SSLink)

@@ -10,7 +10,11 @@ git add OSX/SSLinker/*
 git add OSX/Resources/*
 git add Windows/*
 
-git commit -am "$1"
+COMMIT_MESSAGE='no commit message'
+if [ -n "$1" ]; then
+	COMMIT_MESSAGE=$1
+fi
+git commit -am "${COMMIT_MESSAGE}"
 
 git status
 #curl -s 'https://github.com/qokelate' > /dev/null && git push origin master
