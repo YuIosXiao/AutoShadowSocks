@@ -57,7 +57,7 @@
                            @"redirect":@"/my",
                            @"password":[pwd md5]};
 
-    [CoreNetwork request:@"http://www1.ss-link.com/login" getParam:nil postParam:post postType:NetPostTypeFormData userParam:nil block:^(id respone, NSError *error, id userParam) {
+    [CoreNetwork request:@"http://www2.ss-link.com/login" getParam:nil postParam:post postType:NetPostTypeFormData userParam:nil block:^(id respone, NSError *error, id userParam) {
         respone = [respone toUTF8String];
         LogAnything(respone);
 
@@ -69,7 +69,7 @@
 
 + (void)sslink_getServersWithBlock:(ArrayBlock)block
 {
-    [CoreNetwork request:@"http://www1.ss-link.com/my/hostings" getParam:nil postParam:nil postType:0 userParam:nil block:^(id respone, NSError *error, id userParam) {
+    [CoreNetwork request:@"http://www2.ss-link.com/my/hostings" getParam:nil postParam:nil postType:0 userParam:nil block:^(id respone, NSError *error, id userParam) {
         TFHpple *hpple = [TFHpple hppleWithHTMLData:respone];
 
         if (nil == hpple) {
@@ -155,7 +155,7 @@
 
 + (void)sslink_getBuyServerList:(ArrayBlock)block
 {
-    [CoreNetwork request:@"http://www1.ss-link.com/buy" getParam:nil postParam:nil postType:0 userParam:nil block:^(id respone, NSError *error, id userParam) {
+    [CoreNetwork request:@"http://www2.ss-link.com/buy" getParam:nil postParam:nil postType:0 userParam:nil block:^(id respone, NSError *error, id userParam) {
         TFHpple *hpple = [TFHpple hppleWithHTMLData:respone];
 
         if (nil == hpple) {
@@ -191,14 +191,14 @@
 {
     NSDictionary *param = @{@"serviceId":name, @"term":@"year"};
 
-    [CoreNetwork request:@"http://www1.ss-link.com/order" getParam:nil postParam:param postType:NetPostTypeFormData userParam:nil block:^(id respone, NSError *error, id userParam) {
+    [CoreNetwork request:@"http://www2.ss-link.com/order" getParam:nil postParam:param postType:NetPostTypeFormData userParam:nil block:^(id respone, NSError *error, id userParam) {
         
         if (block) {
             respone = [respone toJSONObject];
             BOOL state = (0 == FType(NSNumber *, respone[@"result"]).integerValue);
 
             if (state) {
-                [CoreNetwork request:@"http://www1.ss-link.com/pay" getParam:nil postParam:@{} postType:NetPostTypeFormData userParam:nil block:^(id respone, NSError *error, id userParam) {
+                [CoreNetwork request:@"http://www2.ss-link.com/pay" getParam:nil postParam:@{} postType:NetPostTypeFormData userParam:nil block:^(id respone, NSError *error, id userParam) {
                     
                     if (block)
                     {
@@ -219,7 +219,7 @@
 {
     NSDictionary *param = @{@"hostingId":hostingId};
 
-    [CoreNetwork request:@"http://www1.ss-link.com/createHosting" getParam:nil postParam:param postType:NetPostTypeFormData userParam:nil block:^(id respone, NSError *error, id userParam) {
+    [CoreNetwork request:@"http://www2.ss-link.com/createHosting" getParam:nil postParam:param postType:NetPostTypeFormData userParam:nil block:^(id respone, NSError *error, id userParam) {
         respone = [respone toJSONObject];
         NSInteger state = FType(NSNumber *, respone[@"result"]).integerValue;
         NSString *message = respone[@"msg"];
