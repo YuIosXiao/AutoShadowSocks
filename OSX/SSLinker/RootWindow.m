@@ -193,7 +193,7 @@ static NSString *const kMsgTypeFreshMyList = @"MsgTypeFreshMyList";
         [btn mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(_userTF.mas_top);
             make.leading.mas_equalTo(_buyListView.mas_trailing).offset(20);
-            make.width.mas_equalTo(80);
+            make.width.mas_equalTo(60);
             make.height.mas_equalTo(40);
         }];
         _freshMyListBtn = btn;
@@ -207,11 +207,25 @@ static NSString *const kMsgTypeFreshMyList = @"MsgTypeFreshMyList";
         [self.contentView addSubview:btn];
         [btn mas_remakeConstraints:^(MASConstraintMaker *make) {
             make.top.mas_equalTo(_userTF.mas_top);
-            make.leading.mas_equalTo(_freshMyListBtn.mas_trailing).offset(20);
+            make.leading.mas_equalTo(_freshMyListBtn.mas_trailing).offset(10);
             make.width.mas_equalTo(80);
             make.height.mas_equalTo(40);
         }];
         _testBtn = btn;
+    }
+    
+    {
+        NSButton *btn = NewClass(NSButton);
+        btn.title = @"update PAC";
+        btn.target = self;
+        btn.action = @selector(updatePacBtn:);
+        [self.contentView addSubview:btn];
+        [btn mas_remakeConstraints:^(MASConstraintMaker *make) {
+            make.top.mas_equalTo(_userTF.mas_top);
+            make.leading.mas_equalTo(_testBtn.mas_trailing).offset(10);
+            make.width.mas_equalTo(80);
+            make.height.mas_equalTo(40);
+        }];
     }
 
     {
@@ -345,6 +359,51 @@ static NSString *const kMsgTypeFreshMyList = @"MsgTypeFreshMyList";
             }
         });
     }];
+}
+
+- (void)updatePacBtn: (NSButton *)sender
+{
+    LogFunctionName();
+    
+    sender.enabled = NO;
+    
+    runBlockWithAsync(^{
+        NSString *url = @"https://raw.githubusercontent.com/n0wa11/gfw_whitelist/master/whitelist.pac";
+        NSData *pac = [ShadowSocksHelper verifySSWithListenParam:_listenInfo url:url];
+        if (pac.length)
+        {
+            NSString *string = [pac toUTF8String];
+            string = [string regexpReplace:@"[\\r\\n]\\s*var\\s+IP_ADDRESS\\s*\\S" replace:@"\n\nvar IP_ADDRESS = '127.0.0.1:1080'\n//"];
+            string = [string regexpReplace:@"[\\r\\n]\\s*var\\s+PROXY_TYPE\\s*\\S" replace:@"\n\nvar PROXY_TYPE = 'SOCKS5'\n//"];
+            
+            NSString *file = [[[NSBundle mainBundle] resourcePath] stringByAppendingString:@"/Resources/gfwlist.js"];
+            [string writeToFile:file atomically:YES encoding:NSUTF8StringEncoding error:NULL];
+            
+            runBlockWithMain(^{
+                NSAlert *alert = [[NSAlert alloc] init];
+                alert.messageText = @"update success!";
+                alert.informativeText = file;
+                alert.alertStyle = NSInformationalAlertStyle;
+                [alert addButtonWithTitle:@"okay"];
+                [alert runModal];
+                sender.enabled = YES;
+            });
+            
+            
+            BreakPointHere;
+        }
+        else
+        {
+            runBlockWithMain(^{
+                NSAlert *alert = [[NSAlert alloc] init];
+                alert.messageText = @"updated error, you need start proxy at fist";
+                alert.alertStyle = NSInformationalAlertStyle;
+                [alert addButtonWithTitle:@"okay"];
+                [alert runModal];
+                sender.enabled = YES;
+            });
+        }
+    });
 }
 
 - (void)testBtn:(NSButton *)sender
