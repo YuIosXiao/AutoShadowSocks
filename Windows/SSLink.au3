@@ -23,8 +23,12 @@
 
 Global Const $szConfig = StringFormat('%s\\SSLink.ini', @AppDataDir)
 
-;~ Global Const $szHelper = 'd:\Software\Git\sma11caseW\Compiled\Debug\sma11case.dll'
-Global Const $szHelper = StringFormat('%s\\SSLink.dll', @ScriptDir)
+If (0 == @Compiled) Then
+;~ Global Const $szHelper = 'D:\Software\Git\sma11caseW\Compiled\Debug\sma11case.dll'
+	Global Const $szHelper = 'D:\Software\Git\sma11caseW\Compiled\Release\sma11case.dll'
+Else
+	Global Const $szHelper = StringFormat('%s\\SSLink.dll', @ScriptDir)
+EndIf
 
 Global Const $szWorkdir = @TempDir
 Global Const $szValidConfig = StringFormat('%s\\valid.ini', $szWorkdir)
