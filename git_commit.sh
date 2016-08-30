@@ -10,6 +10,7 @@ cd "${SCRIPT_DIR}"
 git add -A OSX/SSLinker/*
 git add -A OSX/Resources/*
 git add -A Windows/*
+git add -A OSX/SSLinker.xcodeproj/xcshareddata/*
 
 "./OSX/osxComponents/git_commit.sh"
 
