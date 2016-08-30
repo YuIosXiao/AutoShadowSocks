@@ -8,11 +8,11 @@
 
 #import "RootWindow.h"
 #import "ShadowSocksHelper.h"
-#import "librarys/OSX/staticLibrary_OSX.h"
+#import <osxFramework/osxFramework.h>
 
 static NSString *const kMsgTypeFreshMyList = @"MsgTypeFreshMyList";
 
-@interface RootWindow () <MsgDispatcherDelegate>
+@interface RootWindow ()
 
 @end
 
@@ -38,7 +38,12 @@ static NSString *const kMsgTypeFreshMyList = @"MsgTypeFreshMyList";
     NSArray         *_buyServers;
     NSArray         *_myServers;
     SCNetworkInfo   *_listenInfo;
-    MsgDispatcher   *_msgCenter;
+    __unsafe_unretained NSNotificationCenter   *_msgCenter;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)awakeFromNib
@@ -54,8 +59,8 @@ static NSString *const kMsgTypeFreshMyList = @"MsgTypeFreshMyList";
     _listenInfo.host = @"127.0.0.1";
     _listenInfo.port = 1080U;
 
-    _msgCenter = NewClass(MsgDispatcher);
-    [_msgCenter addReceiver:self type:kMsgTypeFreshMyList];
+    _msgCenter = [NSNotificationCenter defaultCenter];
+    [_msgCenter addObserver:self selector:@selector(didReceivedMessage:) name:kMsgTypeFreshMyList object:nil];
 
     {
         NSTextField *tf = NewClass(NSTextField);
@@ -307,7 +312,7 @@ static NSString *const kMsgTypeFreshMyList = @"MsgTypeFreshMyList";
         });
 
         [NSThread sleepForTimeInterval:2];
-        performSelector0(ws, _cmd, url);
+//        performSelector0(ws, _cmd, url);
     });
 }
 
@@ -333,18 +338,17 @@ static NSString *const kMsgTypeFreshMyList = @"MsgTypeFreshMyList";
 {
     LogFunctionName();
 
-    [CoreTools executeCommand:@"open 'http://www1.ss-link.com/register'" waitFinished:NO];
+    executeCommand(@"open 'http://www1.ss-link.com/register'", NO);
 }
 
 - (void)loginBtn:(NSButton *)sender
 {
     LogFunctionName();
-
+    
     sender.enabled = NO;
     NSString    *user = _userTF.stringValue;
     NSString    *pwd = _pwdTF.stringValue;
     [ShadowSocksHelper sslink_loginWithUser:user password:pwd block:^(BOOL state) {
-        LogAnything(state);
         runBlockWithMain(^{
             if (state) {
                 _freshMyListBtn.enabled = YES;
@@ -448,7 +452,7 @@ static NSString *const kMsgTypeFreshMyList = @"MsgTypeFreshMyList";
             MLog(@"buy %@ ...", config[@"name"]);
             [ShadowSocksHelper sslink_buyServerWithName:config[@"name"] block:^(BOOL state) {
                 MLog(@"buy %@ state: %d", config[@"name"], state);
-                if (config == _buyServers.lastObject) [self createAllHostsWithBlock:^{
+                if (config == _buyServers.lastObject) [self createLastHostingWithBlock:^{
                     runBlockWithMain(^{
                         _buyAllBtn.enabled = YES;
                     });
@@ -465,7 +469,6 @@ static NSString *const kMsgTypeFreshMyList = @"MsgTypeFreshMyList";
     sender.enabled = NO;
     [_buyListView removeAllSubviews];
     [ShadowSocksHelper sslink_getBuyServerList:^(NSArray *respone) {
-        LogAnything(respone);
         [self freshBuyServers:respone];
         runBlockWithMain(^{
             sender.enabled = YES;
@@ -480,7 +483,6 @@ static NSString *const kMsgTypeFreshMyList = @"MsgTypeFreshMyList";
     sender.enabled = NO;
     [_myListView removeAllSubviews];
     [ShadowSocksHelper sslink_getServersWithBlock:^(NSArray *respone) {
-        LogAnything(respone);
         [self freshMyServers:respone];
         runBlockWithMain(^{
             sender.enabled = YES;
@@ -507,7 +509,7 @@ static NSString *const kMsgTypeFreshMyList = @"MsgTypeFreshMyList";
 
     [ShadowSocksHelper sslink_buyServerWithName:config[@"name"] block:^(BOOL state) {
         runBlockWithMain(^{
-            [self createAllHostsWithBlock:^{
+            [self createLastHostingWithBlock:^{
                 runBlockWithMain(^{
                     sender.enabled = YES;
                 });
@@ -634,36 +636,34 @@ static NSString *const kMsgTypeFreshMyList = @"MsgTypeFreshMyList";
     }
 }
 
-- (void)createAllHostsWithBlock: (EmptyBlock)block
+- (void)createLastHostingWithBlock: (EmptyBlock)block
 {
     [ShadowSocksHelper sslink_getServersWithBlock:^(NSArray *respone) {
         for (SSLinkConfig *config in respone)
         {
-            if (0 == config.password.length)
-            {
-                [ShadowSocksHelper sslink_createHostingWithHostingId:config.hostingId block:^(NSInteger state, NSString *message) {
-                    MLog(@"create Hosting: %@ state:%ld message: %@", config.hostingId, state, message);
-                    if (config == respone.lastObject) [_msgCenter dispatchMessage:kMsgTypeFreshMyList userParam:block];
-                }];
-                
-                if (config == respone.lastObject) continue;
-            }
+            if (config.password.length) continue;
             
-            if (config == respone.lastObject) [_msgCenter dispatchMessage:kMsgTypeFreshMyList userParam:block];
+            [ShadowSocksHelper sslink_createHostingWithHostingId:config.hostingId block:^(NSInteger state, NSString *message) {
+                MLog(@"create Hosting: %@ state:%ld message: %@", config.hostingId, state, message);
+                [_msgCenter postNotificationName:kMsgTypeFreshMyList object:block];
+            }];
+            break;
         }
     }];
 }
 
 #pragma mark 消息代理
-- (void)didReceivedMessage:(NSString *)type msgDispatcher:(MsgDispatcher *)sender userParam:(id)param
+- (void)didReceivedMessage:(NSNotification *)sender
 {
     LogFunctionName();
+    
+    BreakPointHere;
 
-    if (IsSameString(type, kMsgTypeFreshMyList)) {
+    if (IsSameString(sender.name, kMsgTypeFreshMyList)) {
         runBlockWithMain(^{
             [self freshServerBtn:_freshMyListBtn];
         });
-        EmptyBlock block = param;
+        EmptyBlock block = sender.object;
         if (block) block();
         return;
     }

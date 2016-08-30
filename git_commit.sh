@@ -1,14 +1,17 @@
 #!/bin/bash
 
-SCRIPT_DIR=$(dirname $0)
-SCRIPT_DIR=${SCRIPT_DIR/\./$(pwd)}
+SCRIPT_DIR="$(dirname $0)"
+if [ '.' = "${SCRIPT_DIR:0:1}" ]; then
+    SCRIPT_DIR="$(pwd)/${SCRIPT_DIR}"
+fi
 echo SCRIPT_DIR = ${SCRIPT_DIR}
+cd "${SCRIPT_DIR}"
 
-cd ${SCRIPT_DIR}
+git add -A OSX/SSLinker/*
+git add -A OSX/Resources/*
+git add -A Windows/*
 
-git add OSX/SSLinker/*
-git add OSX/Resources/*
-git add Windows/*
+"./OSX/osxComponents/git_commit.sh"
 
 COMMIT_MESSAGE='no commit message'
 if [ -n "$1" ]; then
@@ -16,9 +19,8 @@ if [ -n "$1" ]; then
 fi
 git commit -am "${COMMIT_MESSAGE}"
 
-git status
 #curl -s 'https://github.com/qokelate' > /dev/null && git push origin master
 
 echo finished.
-#exit 0
+exit 0
 

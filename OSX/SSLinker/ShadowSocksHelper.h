@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "librarys/OSX/staticLibrary_OSX.h"
+#import "Librarys/sma11case/OSX/osxLibrary/staticLibrary_OSX.h"
 
 typedef void(^StateMessageBlock)(NSInteger state, NSString *message);
 
