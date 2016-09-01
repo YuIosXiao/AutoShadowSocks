@@ -4,6 +4,8 @@
 * 一键开启SS代理
 * 完全免费
 
+* Windows版本停止维护, 相关API可在 [sma11caseX](https://github.com/qokelate/sma11caseX) 获得.
+
 
 ## 使用说明
 * 1. 点击 `register` 注册个用户(若已有账号则跳过)
@@ -16,10 +18,4 @@
 * 没什么好说的,`Released`目录是编译好的版本,不想折腾的下载解压即用.
 * 致谢github!
 
-## 晒个图
-
-### OSX版本
 ![](osx.png)
-
-### Windows 版本
-![](windows.png)
