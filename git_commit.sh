@@ -20,8 +20,6 @@ if [ -n "$1" ]; then
 fi
 git commit -am "${COMMIT_MESSAGE}"
 
-#curl -s 'https://github.com/qokelate' > /dev/null && git push origin master
-
-echo finished.
+git remote show origin | grep 'coding.net' >/dev/null 2>/dev/null && git push origin master
 exit 0
 
